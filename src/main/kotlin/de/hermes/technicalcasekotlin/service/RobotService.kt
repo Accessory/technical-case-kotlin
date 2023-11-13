@@ -13,7 +13,7 @@ import kotlin.time.toDuration
 
 @Service
 class RobotService(val jobRepository: JobRepository) {
-    fun executeRequest(req: EnterPathRequest): Job = jobRepository.save(createJobFromEnterPathRequest(req));
+    fun executeRequest(req: EnterPathRequest): Job = jobRepository.save(createJobFromEnterPathRequest(req))
 
     fun createJobFromEnterPathRequest(req: EnterPathRequest): Job {
         val visited = mutableSetOf(req.start.copy())
@@ -34,6 +34,6 @@ class RobotService(val jobRepository: JobRepository) {
             }
         }
         val duration = elapsed.toDuration(DurationUnit.NANOSECONDS).toDouble(DurationUnit.SECONDS)
-        return Job(Instant.now(), req.commands.count(), visited.count(), duration);
+        return Job(Instant.now(), req.commands.count(), visited.count(), duration)
     }
 }

@@ -14,15 +14,15 @@ import java.time.Instant
 
 class RobotServiceTest {
 
-    private var jobRepositoryMock = mockk<JobRepository>();
+    private var jobRepositoryMock = mockk<JobRepository>()
     private var sut: RobotService = RobotService(jobRepositoryMock)
 
     @Test
     fun executeRequest() {
         val epr = EnterPathRequest(Position(0,0), listOf(Command("north", 2), Command("east", 2)))
-        val job = Job(Instant.now(), 2, 5, 0.0001);
+        val job = Job(Instant.now(), 2, 5, 0.0001)
         every { jobRepositoryMock.save(any()) }.returns(job)
-        val result = sut.executeRequest(epr);
+        val result = sut.executeRequest(epr)
         assertEquals(job.id, result.id)
         assertEquals(job.commands, result.commands)
         assertEquals(job.result, result.result)
@@ -31,8 +31,8 @@ class RobotServiceTest {
     @Test
     fun createJobFromEnterPathRequest() {
         val epr = EnterPathRequest(Position(0,0), listOf(Command("north", 2), Command("east", 2)))
-        val job = Job(Instant.now(), 2, 5, 0.0001);
-        val result = sut.createJobFromEnterPathRequest(epr);
+        val job = Job(Instant.now(), 2, 5, 0.0001)
+        val result = sut.createJobFromEnterPathRequest(epr)
         assertEquals(job.id, result.id)
         assertEquals(job.commands, result.commands)
         assertEquals(job.result, result.result)
