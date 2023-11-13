@@ -1,0 +1,35 @@
+version: "3"
+services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    ports:
+      - "55432:5432"
+    volumes:
+      - progresDB:/var/lib/postgresql/data
+    env_file:
+      - ./.env
+    environment:
+      - POSTGRES_DB=JavaRobot
+      - POSTGRES_PASSWORD=tibber
+      - POSTGRES_USER=tibber
+    networks:
+      - postgres
+  spring_backend:
+    build: .
+    ports:
+      - 5000:5000
+    env_file:
+      - ./.env
+    networks:
+      - postgres
+    environment:
+      - spring.datasource.url=jdbc:postgresql://postgres:5432/JavaRobot
+      - spring.datasource.password=tibber
+      - spring.datasource.username=tibber
+volumes:
+  progresDB:
+networks:
+  postgres:
+    driver: bridge
+    expose: true
