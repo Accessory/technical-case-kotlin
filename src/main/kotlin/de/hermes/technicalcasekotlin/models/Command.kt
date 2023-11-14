@@ -1,5 +1,6 @@
 package de.hermes.technicalcasekotlin.models
 
-import de.hermes.technicalcasekotlin.enums.Direction
+import io.swagger.v3.oas.annotations.media.Schema
 
-class Command (val direction:String, val steps:Int)
+
+class Command (@field:Schema( type = "String" , example = "north") val direction:String, val steps:Int)
