@@ -36,6 +36,7 @@ dependencies {
 	testImplementation("org.testcontainers:junit-jupiter")
 	testImplementation("org.testcontainers:postgresql")
 	testImplementation("com.ninja-squad:springmockk:4.0.2")
+	testImplementation("com.google.code.gson:gson:2.10.1")
 }
 
 tasks.withType<KotlinCompile> {
@@ -47,4 +48,7 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
 	useJUnitPlatform()
+	minHeapSize = "512m"
+	maxHeapSize = "2512m"
 }
+
