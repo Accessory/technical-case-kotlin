@@ -1,18 +1,18 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-	id("org.springframework.boot") version "3.1.5"
-	id("io.spring.dependency-management") version "1.1.3"
-	kotlin("jvm") version "1.8.22"
-	kotlin("plugin.spring") version "1.8.22"
-	kotlin("plugin.jpa") version "1.8.22"
+	id("org.springframework.boot") version "3.5.2"
+	id("io.spring.dependency-management") version "1.1.7"
+	kotlin("jvm") version "1.9.24"
+	kotlin("plugin.spring") version "1.9.24"
+	kotlin("plugin.jpa") version "1.9.24"
 }
 
 group = "de.hermes"
 version = "0.0.1-SNAPSHOT"
 
 java {
-	sourceCompatibility = JavaVersion.VERSION_17
+	sourceCompatibility = JavaVersion.VERSION_21
 }
 
 repositories {
@@ -23,12 +23,13 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
-	implementation("org.flywaydb:flyway-core")
+    implementation("org.flywaydb:flyway-core")
+    implementation("org.flywaydb:flyway-database-postgresql")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
-	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0")
+	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.9")
 	runtimeOnly("org.postgresql:postgresql")
 	testImplementation(kotlin("test"))
-	testImplementation("org.jetbrains.kotlin:kotlin-test:1.8.22")
+	testImplementation("org.jetbrains.kotlin:kotlin-test:1.9.24")
 	testImplementation("org.springframework.boot:spring-boot-starter-test"){
 		exclude("org.mockito", "mockito-core")
 	}
@@ -36,14 +37,14 @@ dependencies {
 	testImplementation("org.testcontainers:junit-jupiter")
 	testImplementation("org.testcontainers:postgresql")
 	testImplementation("com.ninja-squad:springmockk:4.0.2")
-	testImplementation("com.google.code.gson:gson:2.10.1")
+	testImplementation("com.google.code.gson:gson:2.13.1")
 }
 
-tasks.withType<KotlinCompile> {
-	kotlinOptions {
-		freeCompilerArgs += "-Xjsr305=strict"
-		jvmTarget = "17"
-	}
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+    compilerOptions {
+        freeCompilerArgs.add("-Xjsr305=strict")
+        jvmTarget.set(JvmTarget.JVM_21)
+    }
 }
 
 tasks.withType<Test> {
@@ -52,3 +53,6 @@ tasks.withType<Test> {
 	maxHeapSize = "2512m"
 }
 
+springBoot {
+    mainClass.set("de.hermes.technicalcasekotlin.TechnicalCaseKotlinApplicationKt")
+}

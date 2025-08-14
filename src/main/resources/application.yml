@@ -1,8 +1,7 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/JavaRobot
-    password: tibber
-    username: tibber
+    url: jdbc:postgresql://localhost:5432/java_robot
     driver-class-name: org.postgresql.Driver
 server:
   port: 5000
+
